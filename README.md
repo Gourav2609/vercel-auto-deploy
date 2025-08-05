@@ -15,6 +15,8 @@
 1. Go to [Vercel Dashboard](https://vercel.com/dashboard)
 2. Your Project → **Settings** → **Git** → **Deploy Hooks**
 3. **Create Hook** → Copy the URL
+<img width="1885" height="942" alt="image" src="https://github.com/user-attachments/assets/bb3b05f0-e6d0-4e0e-a9cc-82b6f57417ba" />
+
 
 ### 2. Add to GitHub
 1. Your repo → **Settings** → **Secrets and variables** → **Actions**
