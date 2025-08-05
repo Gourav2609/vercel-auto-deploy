@@ -1,0 +1,42 @@
+name: 'Vercel Auto Deploy'
+description: 'Automatically deploy to Vercel when external contributors push to main branch. Perfect for open source projects!'
+author: 'Gourav2609'
+
+branding:
+  icon: 'upload-cloud'
+  color: 'blue'
+
+inputs:
+  exclude-authors:
+    description: 'GitHub usernames to exclude from auto-deploy (comma-separated)'
+    required: false
+    default: 'github-actions[bot]'
+  vercel-deploy-hook:
+    description: 'Vercel Deploy Hook URL'
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: 🚀 Deploy to Vercel
+      shell: bash
+      if: |
+        github.event_name == 'push' && 
+        github.ref == 'refs/heads/main' &&
+        !contains(inputs.exclude-authors, github.actor)
+      run: |
+        echo "🌟 Auto-deploying changes from ${{ github.actor }}"
+        echo "📦 Repository: ${{ github.repository }}"
+        echo "🌿 Branch: ${{ github.ref }}"
+        
+        curl -X POST "${{ inputs.vercel-deploy-hook }}" \
+          -H "Content-Type: application/json" \
+          -d '{
+            "ref": "main",
+            "actor": "${{ github.actor }}",
+            "repository": "${{ github.repository }}",
+            "timestamp": "'$(date -Iseconds)'"
+          }'
+        
+        echo "✅ Deployment triggered!"
+        echo "🔗 Check status: https://vercel.com/dashboard"

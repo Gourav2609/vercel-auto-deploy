@@ -34,11 +34,13 @@ on:
 
 jobs:
   deploy:
-    uses: Gourav2609/vercel-auto-deploy/.github/workflows/auto-deploy.yml@main
-    with:
-      exclude-authors: 'YOUR_GITHUB_USERNAME'
-    secrets:
-      VERCEL_DEPLOY_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to Vercel
+        uses: Gourav2609/vercel-auto-deploy@v1
+        with:
+          exclude-authors: 'YOUR_GITHUB_USERNAME'
+          vercel-deploy-hook: ${{ secrets.VERCEL_DEPLOY_HOOK }}
 ```
 
 **Replace `YOUR_GITHUB_USERNAME` with your GitHub username.**
@@ -54,11 +56,12 @@ Want to exclude more users? Add them to the `with:` section:
 ```yaml
 with:
   exclude-authors: 'YOUR_USERNAME,github-actions[bot],dependabot[bot]'  # Skip these users
+  vercel-deploy-hook: ${{ secrets.VERCEL_DEPLOY_HOOK }}
 ```
 
 ## 🛠️ Troubleshooting
 
-**❌ "secrets.VERCEL_DEPLOY_HOOK is required"**
+**❌ "Input required and not supplied: vercel-deploy-hook"**
 - Check you added the secret with exact name `VERCEL_DEPLOY_HOOK`
 
 **❌ "Build failed"**
